@@ -10,10 +10,13 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AcrylicWindowSample
 {
@@ -51,26 +54,36 @@ namespace AcrylicWindowSample
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class ArcylicWindow : Window
+    public partial class MainWindow 
     {
+
+        private DispatcherTimer timer;
+        private String dayday;
+        
+
         //処理
-        public ArcylicWindow()
+        public MainWindow()
         {
+            
+            
             InitializeComponent();
+            timer = CreateTimer();
+            dayday = CountDays();
+            timer.Start();
         }
+
+        
+
 
         //初期化
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
-        }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
+
+        //public override void OnApplyTemplate()
+        //{
+          //  base.OnApplyTemplate();
             // ウィンドウ背景のぼかし効果を有効にする
-            EnableBlur(this);
-        }
+            //EnableBlur(this);
+        //}
 
 
         [DllImport("user32.dll")]
@@ -100,5 +113,54 @@ namespace AcrylicWindowSample
             Marshal.FreeHGlobal(accentPtr);
         }
 
+        //現在時刻を表示
+        //https://qiita.com/Kosen-amai/items/88b3d987b41f46ebea4b
+        /// <summary>
+        /// タイマー生成処理
+        /// </summary>
+        /// <returns>生成したタイマー</returns>
+        private DispatcherTimer CreateTimer()
+        {
+            // タイマー生成（優先度はアイドル時に設定）
+            var t = new DispatcherTimer(DispatcherPriority.SystemIdle);
+            var culture = new System.Globalization.CultureInfo("en-US");
+            
+            
+            // タイマーイベントの発生間隔を300ミリ秒に設定
+            t.Interval = TimeSpan.FromMilliseconds(300);
+
+            // タイマーイベントの定義
+            t.Tick += (sender, e) =>
+            {
+                // タイマーイベント発生時の処理をここに書く
+
+                // 現在の時分秒をテキストに設定
+                nowtimer.Text = DateTime.Now.ToString("MMM d  HH:mm ddd", culture);
+                /////nowtimer.Text = DateTime.Now.ToString("yyyy.MMMdd.HH:mm:ss  ddd", culture);
+            };
+
+            // 生成したタイマーを返す
+            return t;
+        }
+
+
+
+
+
+        //これによって日付を計算する
+        private String CountDays()
+        {
+            // タイマー生成（優先度はアイドル時に設定）
+
+            DateTime startday = new DateTime(2015, 10, 01);
+            // タイマーイベントの発生間隔を300ミリ秒に設定
+            TimeSpan getdays = DateTime.Today - new DateTime(2015, 10, 1);
+
+            // 現在の時分秒をテキストに設定
+            days.Text = getdays.ToString("dd");
+
+            // 生成したタイマーを返す
+            return getdays.ToString();
+        }
     }
 }
