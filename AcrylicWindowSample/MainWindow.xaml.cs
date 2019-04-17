@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+    Copyright (c) 2016 minami_SC
+    URL:https://github.com/sourcechord/FluentWPF
+ */
+
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -17,6 +27,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+
+using SolutionItems;
 
 namespace AcrylicWindowSample
 {
@@ -58,7 +70,7 @@ namespace AcrylicWindowSample
     {
 
         private DispatcherTimer timer;
-        private String dayday;
+        private Counter dayday;
         
 
         //処理
@@ -68,7 +80,8 @@ namespace AcrylicWindowSample
             
             InitializeComponent();
             timer = CreateTimer();
-            dayday = CountDays();
+            dayday = new Counter();
+            days.Text = dayday.CountDays();
             timer.Start();
         }
 
@@ -147,20 +160,6 @@ namespace AcrylicWindowSample
 
 
 
-        //これによって日付を計算する
-        private String CountDays()
-        {
-            // タイマー生成（優先度はアイドル時に設定）
-
-            DateTime startday = new DateTime(2015, 10, 01);
-            // タイマーイベントの発生間隔を300ミリ秒に設定
-            TimeSpan getdays = DateTime.Today - new DateTime(2015, 10, 1);
-
-            // 現在の時分秒をテキストに設定
-            days.Text = getdays.ToString("dd");
-
-            // 生成したタイマーを返す
-            return getdays.ToString();
-        }
+        
     }
 }
