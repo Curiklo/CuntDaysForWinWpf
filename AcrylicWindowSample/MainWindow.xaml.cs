@@ -63,6 +63,22 @@ namespace AcrylicWindowSample
         public int AnimationId;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
@@ -155,6 +171,10 @@ namespace AcrylicWindowSample
             // 生成したタイマーを返す
             return t;
         }
+
+
+
+
 
 
 
